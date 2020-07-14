@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es2015",
+    "lib": ["es6", "dom"],
+    "types": ["node", "react", "jest"],
+    "moduleResolution": "node",
+    "jsx": "react",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitThis": true,
+    "noImplicitAny": false,
+    "importHelpers": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "@pkg/components": ["./packages/component/src"]
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "name": "pkg",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "author": "Palani Kamaraj",
+  "private": true,
+  "scripts": {
+    "start": "yarn workspace @pkg/app start",
+    "analyze": "yarn workspace @pkg/app analyze",
+    "create:link":"concurrently \"yarn --cwd \"node_modules/react\" link \" \"yarn workspace @pkg/components link\"",
+    "do:unlink":"concurrently \"yarn --cwd \"node_modules/react\" unlink \" \"yarn workspace @pkg/components unlink\"",
+    "build": "yarn workspace @pkg/components build",
+    "test:watch": "jest --watchAll",
+    "test:ci": "CI=1 jest --reporters=default --reporters=jest-junit --coverage",
+    "publish-lib": "lerna publish from-package --no-git-tag-version --no-push --no-git-reset --conventional-commits --no-changelog --canary --force-publish",
+    "publish:local": "lerna publish --skip-git --skip-npm --force-publish"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/packages"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testMatch": [
+      "**/?(*.)+(spec|test).ts?(x)"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "tsx",
+      "jsx"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": {
+          "jsx": "react"
+        }
+      }
+    },
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx,jsx}",
+      "!src/index.js",
+      "!src/serviceWorker.js",
+      "!src/setupProxy.js",
+      "!src/ntb/baseComponents/*js"
+    ],
+    "coverageReporters": [
+      "text",
+      "cobertura",
+      "lcov"
+    ],
+    "moduleNameMapper":{
+      "\\.(css)$": "<rootDir>/__mocks__/styleMock.ts"
+    },
+    "resetMocks": true
+  },
+  "husky": {
+    "hooks": {
+      "post-merge": "yarn build",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "@types/node": "12.6.8",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "concurrently": "^4.1.1",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "husky": "^3.0.2",
+    "jest": "^24.8.0",
+    "jest-junit": "^9.0.0",
+    "lerna": "^3.18.4",
+    "lint-staged": "^9.2.1",
+    "prettier": "^1.18.2",
+    "stylelint": "^10.1.0",
+    "stylelint-config-recommended": "^2.2.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.8.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.3"
+  }
+}
